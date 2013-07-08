@@ -1,4 +1,5 @@
 import scala.collection.mutable.Set
+import scala.annotation.tailrec
 
 object Solution {
     def solution(A: Array[Int]): Int = {
