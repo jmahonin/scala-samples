@@ -1,14 +1,9 @@
 import scala.collection.immutable.TreeSet
 
+// Inspired from
+// http://stackoverflow.com/questions/4801242/algorithm-to-calculate-number-of-intersecting-discs
 object Solution {
 	def solution(A: Array[Int]): Int = {
-		//return naiveSolution(A)
-		return smartSolution(A)
-	}
-
-	// Adapted from http://stackoverflow.com/questions/14042447/counting-disk-intersections-using-treeset
-	def smartSolution(A: Array[Int]): Int = {
-		
 		class Marker(val i: Int, val left: Boolean) extends Ordered[Marker] {
 			def compare(c: Marker): Int = {
 				if (i < c.i) return - 1
@@ -46,29 +41,6 @@ object Solution {
  		}
 
  		return overlaps
-	}
-
-
-
-	// Compare each circle to eachother to determine overlaps
-	// Runs in O(n^2)
-	def naiveSolution(A: Array[Int]): Int = {
-		// Check if i's left edge overlap's j's right, or vice versa
-		def intersect(A: Array[Int], i: Int, j: Int): Boolean = {
-			if (i == j) return false;
-			else if (i < j && i + A(i) >= j - A(j)) return true
-			else if (i > j && j + A(j) >= i - A(i)) return true
-			return false
-		}		
-
-		val pairs = for {
-			i <- 0 to A.length - 1
-			j <- i to A.length - 1
-			if (intersect(A, i, j))
-		} yield (i, j)
-
-		if (pairs.size > 10000000) return -1;
-		return pairs.size
 	}
 }
 
